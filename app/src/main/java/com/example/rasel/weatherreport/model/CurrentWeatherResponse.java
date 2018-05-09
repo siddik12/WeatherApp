@@ -26,7 +26,7 @@ public class CurrentWeatherResponse {
     private Clouds clouds;
     @SerializedName("dt")
     @Expose
-    private Integer dt;
+    private long dt;
     @SerializedName("sys")
     @Expose
     private Sys sys;
@@ -88,7 +88,7 @@ public class CurrentWeatherResponse {
         this.clouds = clouds;
     }
 
-    public Integer getDt() {
+    public long getDt() {
         return dt;
     }
 
@@ -221,10 +221,10 @@ public class CurrentWeatherResponse {
         private String country;
         @SerializedName("sunrise")
         @Expose
-        private Integer sunrise;
+        private long sunrise;
         @SerializedName("sunset")
         @Expose
-        private Integer sunset;
+        private long sunset;
 
         public Double getMessage() {
             return message;
@@ -242,7 +242,7 @@ public class CurrentWeatherResponse {
             this.country = country;
         }
 
-        public Integer getSunrise() {
+        public long getSunrise() {
             return sunrise;
         }
 
@@ -250,7 +250,7 @@ public class CurrentWeatherResponse {
             this.sunrise = sunrise;
         }
 
-        public Integer getSunset() {
+        public long getSunset() {
             return sunset;
         }
 

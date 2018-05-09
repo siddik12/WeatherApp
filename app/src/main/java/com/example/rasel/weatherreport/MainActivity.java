@@ -1,6 +1,7 @@
 package com.example.rasel.weatherreport;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -70,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_settings){
+            startActivity(new Intent(MainActivity.this,SettingsActivity.class));
+        }
         return super.onOptionsItemSelected(item);
     }
 
