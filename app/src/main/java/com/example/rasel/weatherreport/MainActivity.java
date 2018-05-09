@@ -11,11 +11,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.rasel.weatherreport.adapter.CurrentWeatherAdapter;
 import com.example.rasel.weatherreport.api.WeatherApi;
 import com.example.rasel.weatherreport.model.CurrentWeatherResponse;
-import com.example.rasel.weatherreport.utils.Constant;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -59,6 +60,17 @@ public class MainActivity extends AppCompatActivity {
         checkLocationPermission();
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
