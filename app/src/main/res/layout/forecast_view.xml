@@ -24,7 +24,7 @@
                 android:id="@+id/textViewToday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Today" />
+                android:text="Today" />
 
             <LinearLayout
                 android:id="@+id/minBlock"
@@ -34,13 +34,13 @@
                     android:id="@+id/textViewMin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="Min" />
+                    android:text="Min" />
 
                 <TextView
                     android:id="@+id/textViewMinValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="25°C" />
+                    android:text="25°C" />
             </LinearLayout>
 
 
@@ -72,7 +72,7 @@
                 android:id="@+id/textViewDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="January 11,2018" />
+                android:text="January 11,2018" />
 
             <LinearLayout
                 android:id="@+id/maxBlock"
@@ -82,13 +82,13 @@
                     android:id="@+id/textViewMax"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="Min" />
+                    android:text="Min" />
 
                 <TextView
                     android:id="@+id/textViewMaxValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="25°C" />
+                    android:text="25°C" />
             </LinearLayout>
 
         </LinearLayout>

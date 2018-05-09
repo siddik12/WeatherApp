@@ -10,12 +10,14 @@ import android.widget.TextView;
 
 import com.example.rasel.weatherreport.R;
 import com.example.rasel.weatherreport.model.Demo;
+import com.example.rasel.weatherreport.model.ForecastWeatherResponse;
 
 import java.util.List;
 
 public class ForecastWeatherAdapter extends RecyclerView.Adapter<ForecastWeatherAdapter.ForecastViewHolder> {
 
     private List<Demo> forecastList;
+    private List<ForecastWeatherResponse> forecastWeatherResponses;
 
     public ForecastWeatherAdapter(List<Demo> forecastList) {
         this.forecastList = forecastList;
