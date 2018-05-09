@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
         String currentWeatherUrl = String.format(Locale.US,"weather?lat=%f&lon=%f&units=%s&appid=%s",latitude,longitude,units,getString(R.string.weather_api_key) );
 
-        String cityWeatherUrl = String.format(Locale.US,"weather?q=%s",city );
+        //String cityWeatherUrl = String.format(Locale.US,"weather?q=%s",city );
 
         Call<CurrentWeatherResponse> responseCall = weatherApi.getCurrentWeatherData(currentWeatherUrl);
 
