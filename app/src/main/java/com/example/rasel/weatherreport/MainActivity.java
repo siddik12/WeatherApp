@@ -30,9 +30,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.example.rasel.weatherreport.utils.Constant.WeatherLocation.latitude;
-import static com.example.rasel.weatherreport.utils.Constant.WeatherLocation.longitude;
-
 public class MainActivity extends AppCompatActivity {
     private FusedLocationProviderClient client;
     private ViewPager viewPager;
@@ -40,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private String units = "metric";//imperial
     private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/";
     private String city;
+    public static double latitude = 0.0;
+    public static double longitude = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         client = LocationServices.getFusedLocationProviderClient(this);
+        checkLocationPermission();
+        getLocation();
 
 
         viewPager = findViewById(R.id.viewPagerId);
@@ -58,10 +59,10 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
-        checkLocationPermission();
 
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void getLocation(){
+    public void getLocation(){
         checkLocationPermission();
         client.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
@@ -94,46 +95,15 @@ public class MainActivity extends AppCompatActivity {
                 if(location == null){
                     return;
                 }
+
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
 
-                getCurrentWeatherData();
             }
         });
     }
 
-    private void getCurrentWeatherData() {
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(BASE_URL)
-                .build();
-
-        WeatherApi weatherApi = retrofit.create(WeatherApi.class);
-
-        String currentWeatherUrl = String.format(Locale.US,"weather?lat=%f&lon=%f&units=%s&appid=%s",latitude,longitude,units,getString(R.string.weather_api_key) );
-
-        //String cityWeatherUrl = String.format(Locale.US,"weather?q=%s",city );
-
-        Call<CurrentWeatherResponse> responseCall = weatherApi.getCurrentWeatherData(currentWeatherUrl);
-
-        responseCall.enqueue(new Callback<CurrentWeatherResponse>() {
-            @Override
-            public void onResponse(Call<CurrentWeatherResponse> call, Response<CurrentWeatherResponse> response) {
-                if(response.code() == 200){
-                    CurrentWeatherResponse currentWeatherResponse =
-                            response.body();
-                    Log.d("Data", String.valueOf(currentWeatherResponse.getMain().getTemp()));
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CurrentWeatherResponse> call, Throwable t) {
-
-            }
-        });
-    }
 
     private void checkLocationPermission(){
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

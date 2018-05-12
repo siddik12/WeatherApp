@@ -316,7 +316,7 @@ public class CurrentWeatherResponse {
         private Double speed;
         @SerializedName("deg")
         @Expose
-        private Integer deg;
+        private double deg;
 
         public Double getSpeed() {
             return speed;
@@ -326,7 +326,7 @@ public class CurrentWeatherResponse {
             this.speed = speed;
         }
 
-        public Integer getDeg() {
+        public double getDeg() {
             return deg;
         }
 

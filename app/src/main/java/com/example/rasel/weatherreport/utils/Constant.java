@@ -10,8 +10,6 @@ public class Constant {
     public static final String BASE_URL = "http://api.openweathermap.org/data/2.5/";
     public static class WeatherLocation{
         public String units = "metric";//imperial
-        public static double latitude;
-        public static double longitude;
     }
 
     public static class DateTimeFormat{

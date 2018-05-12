@@ -12,16 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.rasel.weatherreport.MainActivity;
 import com.example.rasel.weatherreport.R;
 import com.example.rasel.weatherreport.api.WeatherApi;
 import com.example.rasel.weatherreport.model.CurrentWeatherResponse;
 import com.example.rasel.weatherreport.utils.Constant;
 import com.squareup.picasso.Picasso;
 
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -30,32 +27,35 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.example.rasel.weatherreport.utils.Constant.WeatherLocation.latitude;
-import static com.example.rasel.weatherreport.utils.Constant.WeatherLocation.longitude;
-
+import static com.example.rasel.weatherreport.MainActivity.latitude;
+import static com.example.rasel.weatherreport.MainActivity.longitude;
 
 public class FragmentCurrent extends Fragment {
     private WeatherApi weatherApi;
-    private String units = "metric";//imperial
     private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/";
     private String city;
     private TextView textViewTemp, textViewDate, textViewDay, textViewCity,textViewWeatherMain,textViewMinValue,textViewMaxValue,textViewHumidity,textViewPressure,textViewSunrise,textViewSunset;
     private ImageView imageViewIcon;
     private double temp;
 
+    public FragmentCurrent (){
+
+    }
+
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        latitude = 23.777176;
-        longitude = 90.399452;
-        getCurrentWeatherData();
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.d("DATA", String.valueOf(latitude));
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment_current, container, false);
+        getCurrentWeatherData();
 
+        Log.d("DATA", String.valueOf(latitude));
 
         textViewTemp = view.findViewById(R.id.textViewTemp);
         textViewDate = view.findViewById(R.id.textViewDate);
@@ -70,6 +70,8 @@ public class FragmentCurrent extends Fragment {
         textViewSunrise = view.findViewById(R.id.textViewSunrise);
         textViewSunset = view.findViewById(R.id.textViewSunset);
 
+
+
         return view;
     }
 
@@ -80,8 +82,11 @@ public class FragmentCurrent extends Fragment {
                 .baseUrl(BASE_URL)
                 .build();
 
-        WeatherApi weatherApi = retrofit.create(WeatherApi.class);
+        weatherApi = retrofit.create(WeatherApi.class);
 
+
+
+        String units = "metric";
         String currentWeatherUrl = String.format(Locale.US, "weather?lat=%f&lon=%f&units=%s&appid=%s", latitude, longitude, units, getString(R.string.weather_api_key));
 
         //String cityWeatherUrl = String.format(Locale.US,"weather?q=%s",city );
@@ -110,15 +115,20 @@ public class FragmentCurrent extends Fragment {
                     Uri uri = Uri.parse("http://openweathermap.org/img/w/" + currentWeatherResponse.getWeather().get(0).getIcon() + ".png");
                     Picasso.get().load(uri).into(imageViewIcon);
 
+                    Log.d("DATA",response.body().getName());
+
                 }
             }
 
             @Override
             public void onFailure(Call<CurrentWeatherResponse> call, Throwable t) {
-
+                Log.d("DATA",t.getMessage());
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+
 
 
 

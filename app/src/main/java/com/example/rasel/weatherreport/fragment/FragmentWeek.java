@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +27,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.example.rasel.weatherreport.utils.Constant.WeatherLocation.latitude;
-import static com.example.rasel.weatherreport.utils.Constant.WeatherLocation.longitude;
+import static com.example.rasel.weatherreport.MainActivity.latitude;
+import static com.example.rasel.weatherreport.MainActivity.longitude;
 
 
 /**
@@ -35,20 +36,20 @@ import static com.example.rasel.weatherreport.utils.Constant.WeatherLocation.lon
  */
 public class FragmentWeek extends Fragment {
 
-    private RecyclerView recyclerView;
     private WeatherApi weatherApi;
     private String units = "metric";//imperial
     private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/";
     private String city;
     private String count;
+    private ForecastWeatherAdapter adapter;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        latitude = 23.75;
-        longitude = 90.39;
-        getForecastWeatherData();
+        /*latitude = 23.75;
+        longitude = 90.39;*/
+
     }
 
 
@@ -56,8 +57,8 @@ public class FragmentWeek extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_fragment_week, container, false);
-        recyclerView = view.findViewById(R.id.recyclerView);
-
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
+        getForecastWeatherData();
         ArrayList<Demo> demos = new ArrayList<>();
 
         Demo demo = new Demo("Today","25°C","45°C","9 May,2018",R.drawable.cloud);
@@ -85,9 +86,9 @@ public class FragmentWeek extends Fragment {
                 .baseUrl(BASE_URL)
                 .build();
 
-        WeatherApi weatherApi = retrofit.create(WeatherApi.class);
+         weatherApi = retrofit.create(WeatherApi.class);
 
-        String forecastWeatherUrl = String.format(Locale.US, "forecast?lat=%f&lon=%f&units=%s&cnt=%s&appid=%s", latitude, longitude, units,count, getString(R.string.weather_api_key));
+        String forecastWeatherUrl = String.format(Locale.US, "forecast?lat=%f&lon=%f&cnt=%s&appid=%s", latitude, longitude,count, getString(R.string.weather_api_key));
 
         Call<ForecastWeatherResponse> responseCall = weatherApi.getForecastWeatherData(forecastWeatherUrl);
         responseCall.enqueue(new Callback<ForecastWeatherResponse>() {
@@ -95,9 +96,7 @@ public class FragmentWeek extends Fragment {
             public void onResponse(Call<ForecastWeatherResponse> call, Response<ForecastWeatherResponse> response) {
                 if (response.code() == 200) {
                     ForecastWeatherResponse forecastWeatherResponse = response.body();
-                    ArrayList<ForecastWeatherResponse.List> lists = new ArrayList<>();
-                    Toast.makeText(getContext(), ""+forecastWeatherResponse.getList().get(0).getTemp().getMin(), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getContext(), ""+response.body().toString(), Toast.LENGTH_SHORT).show();
+                   Log.d("Res",response.body().toString());
                 }
             }
 
